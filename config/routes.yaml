@@ -3,5 +3,6 @@
 #    controller: App\Controller\DefaultController::index
 firstname:
   path: /client/prenom/{firstname}
+  controller: App\Controller\ClientController::info
   requirements:
     url: '[a-z]*+([-])+[a-z]*'
