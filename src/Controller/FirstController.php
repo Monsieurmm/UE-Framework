@@ -5,7 +5,6 @@ namespace App\Controller;
 
 
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class FirstController
@@ -13,10 +12,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class FirstController
 {
-    /**
-     * @Route("/index", name="index")
-     * @return Response
-     */
     public function response(): Response
     {
         $response = new Response();
