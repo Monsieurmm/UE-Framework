@@ -23,7 +23,7 @@ class ClientController extends AbstractController
      */
     public function info ($firstname): Response
     {
-        if (preg_match("/^[a-z]*+([-])+[a-z]*/", $firstname)) {
+        if (preg_match("/^[a-z]*+([ \-'])+[a-z]+$/", $firstname)) {
 
             return new Response($firstname, Response::HTTP_OK);
         }
