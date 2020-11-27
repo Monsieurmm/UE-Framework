@@ -1,3 +1,7 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+firstname:
+  path: /client/prenom/{firstname}
+  requirements:
+    url: '[a-z]*+([-])+[a-z]*'
