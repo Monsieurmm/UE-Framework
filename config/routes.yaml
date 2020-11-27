@@ -1,8 +1,8 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
-firstname:
-  path: /client/prenom/{firstname}
-  controller: App\Controller\ClientController::info
-  requirements:
-    url: '[a-z]*+([-])+[a-z]*'
+#firstname:
+#  path: /client/prenom/{firstname}
+#  controller: App\Controller\ClientController::info
+#  requirements:
+#    url: '[a-z]{1}[a-z -]*[a-z]{1}$'

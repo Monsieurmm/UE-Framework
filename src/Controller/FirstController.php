@@ -7,10 +7,14 @@ namespace App\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Class FirstController
+ * @package App\Controller
+ */
 class FirstController
 {
     /**
-     * @Route("/index")
+     * @Route("/index", name="index")
      * @return Response
      */
     public function response(): Response
