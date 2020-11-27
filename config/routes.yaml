@@ -6,4 +6,4 @@ toto:
   controller: App\Controller\ClientController::info
   methods: GET
   requirements:
-    firstname: '[a-z]{1}[a-z -]*[a-z]{1}$'
+    firstname: '^[a-z]{1}[a-z -]*[a-z]{1}$'
