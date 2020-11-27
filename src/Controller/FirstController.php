@@ -3,9 +3,6 @@
 
 namespace App\Controller;
 
-
-use Symfony\Component\HttpFoundation\Response;
-
 /**
  * Class FirstController
  * @package App\Controller
