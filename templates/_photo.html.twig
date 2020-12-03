@@ -1,0 +1,5 @@
+{% if firstname %}
+<div style="display: block; float: right">
+    <img src="{{ path('client_picture', {firstname:firstname}) }}" width="500" height="500">
+</div>
+{% endif %}
