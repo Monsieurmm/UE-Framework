@@ -60,7 +60,7 @@ class ImageController extends AbstractController
     }
 
     /**
-     * @Route("/", name="show_render")
+     * @Route("/home", name="show_render")
      */
     public function menu()
     {
