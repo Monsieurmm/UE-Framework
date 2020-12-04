@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\RequestContext;
 
 /**
  * @Route("/client")
@@ -16,17 +17,23 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ClientController extends AbstractController
 {
+    private $request;
+    function __construct(RequestContext $requestContext)
+    {
+        $this->request = $requestContext;
+    }
+
     /**
-     * @Route("/firstname/{firstname}", name="client_firstname", requirements={"firstname"="^[a-z]{1}[a-z -]*[a-z]{1}$"})
+     * @Route("/info/{firstname}", name="client_firstname", requirements={"firstname"="^[a-z]{1}[a-z -]*[a-z]{1}$"})
      * @param $firstname
      * @return Response
      */
     public function info ($firstname): Response
     {
-        $url = $this->generateUrl('client_picture', ['firstname' => $firstname]);
+        $host = $this->request->getHost();
         return $this->render(
             'monTemplate.html.twig',
-            ['msg' => 'Bonjour', 'firstname' => $firstname, 'url' => $url]
+            ['msg' => 'Bonjour', 'firstname' => $firstname, 'host' => $host]
         );
     }
 
