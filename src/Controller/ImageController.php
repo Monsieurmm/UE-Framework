@@ -36,6 +36,6 @@ class ImageController extends AbstractController
      */
     public function affiche($image): Response
     {
-        return new BinaryFileResponse(__DIR__."/../../images/$image.jpg", 200, ['Content-Type' => 'image/jpg']);
+        return $this->file(__DIR__."/../../images/$image.jpg", "image.jpg");
     }
 }
