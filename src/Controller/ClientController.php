@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\RequestContext;
 
 /**
- * @Route("/client")
+ * @Route("/client", Options={"Ouverture":"8-17"})
  * Class ClientController
  * @package App\Controller
  */

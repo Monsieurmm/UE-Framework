@@ -29,6 +29,7 @@ class EventListener
 
     public function onKernelController(ControllerEvent $event)
     {
+
         /** @var RouteCollection $collection */
         $route = $this->router->getRouteCollection()->get("access_granted");
         if ($route !== null && $route->hasOption('Ouverture')) {
@@ -36,7 +37,7 @@ class EventListener
             $start = $format[0];
             $end = $format[1];
             $innerTime = date("G");
-            if ($innerTime > $start && $innerTime < $end) {
+            if ($innerTime < $start && $innerTime > $end) {
                 $event->setController([$this->controller, 'info']);
             }
         }

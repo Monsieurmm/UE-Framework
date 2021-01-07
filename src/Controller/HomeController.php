@@ -8,14 +8,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class AccessGranted extends AbstractController
+class HomeController extends AbstractController
 {
     /**
-     * @Route("/home", options={"Ouverture":"8-17"}, name="access_granted")
+     * @Route("/hello", options={"Ouverture":"8-17"}, name="hello")
      * @return Response
      */
-    public function home(): Response
+    public function home()
     {
-        return $this->render("accueil/home.html.twig");
+        return new Response("hello world");
     }
 }
