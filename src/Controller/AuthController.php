@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Contracts\Translation\TranslatableInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class AuthController extends AbstractController
 {
@@ -27,24 +29,33 @@ class AuthController extends AbstractController
         $constraint = new NotBlank();
 
         $builder->add('name', TextType::class,[
-            'constraints' => [$constraint, new Length(['min' => 2])]
+            'constraints' => [$constraint, new Length(['min' => 2, 'minMessage' => 'Too short only {{ value }} chars instead of {{ limit }}'])]
         ])
             ->add('btSubmit', SubmitType::class);
 
         $form = $builder->getForm();
 
-        $renderInto = $form->createView();
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            return $this->render('auth.html.twig', [
-                'data' => $form->getData()
-            ]);
+            return $this->forward('App\Controller\AuthController::message');
         } else {
+            $renderInto = $form->createView();
+
             return $this->render('login.html.twig', [
                 'formInfo' => $renderInto
             ]);
         }
+    }
+
+    /**
+     * @Route("/welcome", name="welcome")
+     * @param TranslatorInterface $translator
+     * @return Response
+     */
+    public function message (TranslatorInterface $translator)
+    {
+        return new Response ($translator->trans("Welcome"));
     }
 }

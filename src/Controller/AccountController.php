@@ -5,6 +5,7 @@ namespace App\Controller;
 
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -27,7 +28,7 @@ class AccountController extends AbstractController
 
         $constraint = new NotBlank();
 
-        $builder->add('email', TextType::class, [
+        $builder->add('email', EmailType::class, [
             'constraints' => [$constraint, new Length(['min' => 2])]
         ])
             ->add('password', RepeatedType::class, [
@@ -44,6 +45,7 @@ class AccountController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             return $this->render('auth.html.twig', [
                 'data' => $form->getData()
             ]);
