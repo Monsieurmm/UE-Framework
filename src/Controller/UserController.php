@@ -15,32 +15,16 @@ class UserController extends AbstractController
 {
     /**
      * @Route("/login", name="login")
-     * @param Request $request
      * @return Response
      */
-    public function login(Request $request): Response
+    public function login(): Response
     {
         $user = new User();
 
         $form = $this->createForm(UserType::class, $user, [
-            'action' => $this->generateUrl('login'),
+            'action' => $this->generateUrl('home'),
             'method' => 'POST'
         ]);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            if ($user->getEmail() === "toto@toto.com" && $user->getPassword() === "password1") {
-                return $this->render('auth.html.twig', [
-                    'user' => $user
-                ]);
-            } else {
-                return $this->render('login.html.twig', [
-                    'form' => $form->createView()
-                ]);
-            }
-        }
 
         return $this->render('_nav_login.html.twig', [
             'form' => $form->createView()

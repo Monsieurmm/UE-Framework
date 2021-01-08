@@ -4,18 +4,55 @@
 namespace App\Controller;
 
 
+use App\Entity\User;
+use App\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class AccessGranted extends AbstractController
 {
     /**
-     * @Route("/home", options={"Ouverture":"8-17"}, name="access_granted")
+     * @Route("/home", name="home")
+     * @param ValidatorInterface $validator
+     * @param Request $request
      * @return Response
      */
-    public function home(): Response
+    public function home(ValidatorInterface $validator, Request $request): Response
     {
-        return $this->render("accueil/home.html.twig");
+        $message = null;
+        $user = new User();
+
+        if ($request->isMethod("POST")) {
+
+            $form = $this->createForm(UserType::class, $user);
+
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+
+                if ($user->getEmail() === "toto@toto.com" && $user->getPassword() === "password1") {
+                    $message = "ok";
+                } else {
+                    $errors = $validator->validate($form);
+
+                    foreach ($errors as $error) {
+                        $message .= $error->getMessage() . " ";
+                    }
+                }
+            } else {
+                $errors = $validator->validate($form);
+
+                foreach ($errors as $error) {
+                    $message .= $error->getMessage() . " ";
+                }
+            }
+        }
+
+        return $this->render("accueil/home.html.twig", [
+            'message' => $message
+        ]);
     }
 }
