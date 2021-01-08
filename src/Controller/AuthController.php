@@ -27,36 +27,39 @@ class AuthController extends AbstractController
      */
     public function login(Request $request): Response
     {
-        $builder = $this->createFormBuilder(null, array('csrf_protection' => false));
-
-        $constraint = new NotBlank();
+        $builder = $this->createFormBuilder();
 
         $builder->add('email', TextType::class,[
             'constraints' => [
-                $constraint,
+                new NotBlank(),
                 new Regex([
-                    'pattern' => "^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$^",
+                    'pattern' => "^([\w\.\-]+)@([\w\-]+)((\.(\w){2,})+)$^",
                     'message' => 'invalid email'
                 ])]
         ])
             ->add('password', RepeatedType::class,[
                 'type' => PasswordType::class,
                 'constraints' => [
-                    $constraint,
+                    new NotBlank(),
                     new Regex([
-                        'pattern' => "^([\w\.\-]+)@([\w\-]+)((\.(\w){2,})+)$^",
+                        'pattern' => "^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$^",
+                        'match' => true,
                         'message' => 'invalid password'
-                    ])]
+                    ])
+                ],
+                'first_options' => ['label' => 'Password'],
+                'second_options' => ['label' => 'Confirm password']
             ])
             ->add('btSubmit', SubmitType::class);
 
         $form = $builder->getForm();
 
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            return $this->forward('App\Controller\AuthController::message');
+            return $this->render('auth.html.twig', [
+                    'data' => $form->getData()
+                ]);
         } else {
             $renderInto = $form->createView();
 

@@ -3,8 +3,12 @@
     <file source-language="en" datatype="plaintext" original="file.ext">
         <body>
             <trans-unit id="1">
-                <source>Too Short only {{ value }} chars instead of {{ limit }}</source>
-                <target>Trop court seulement {{ value }} au lieu de {{ limit }} charactères.</target>
+                <source>invalid email</source>
+                <target>adresse mail invalide</target>
+            </trans-unit>
+            <trans-unit id="2">
+                <source>invalid password</source>
+                <target>mot de passe invalide</target>
             </trans-unit>
         </body>
     </file>

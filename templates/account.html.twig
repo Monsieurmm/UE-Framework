@@ -2,11 +2,14 @@
 
 {% block body %}
 
-    {{ form_start(formInfo) }}
-    {{ form_row(formInfo.email) }}
-    {{ form_errors(formInfo.email) }}
-    {{ form_row(formInfo.password) }}
-    {{ form_errors(formInfo.password) }}
-    {{ form_end(formInfo) }}
+    <div>
+        {{ form_start(formInfo) }}
+        {{ form_row(formInfo.email) }}
+        {{ form_errors(formInfo.email) }}
+        {{ form_row(formInfo.password) }}
+        {{ form_errors(formInfo.password) }}
+        {{ form_end(formInfo) }}
+    </div>
+
 
 {% endblock %}
