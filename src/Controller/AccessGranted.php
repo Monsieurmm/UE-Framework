@@ -34,7 +34,9 @@ class AccessGranted extends AbstractController
             if ($form->isSubmitted() && $form->isValid()) {
 
                 if ($user->getEmail() === "toto@toto.com" && $user->getPassword() === "password1") {
-                    $message = "ok";
+                    return $this->render('auth.html.twig', [
+                        'user' => $user
+                    ]);
                 } else {
                     $errors = $validator->validate($form);
 
