@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class AccountController extends AbstractController
 {
@@ -24,15 +25,21 @@ class AccountController extends AbstractController
      */
     public function createAccount(Request $request)
     {
-        $builder = $this->createFormBuilder();
+        $builder = $this->createFormBuilder(null, array('csrf_protection' => false));
 
         $constraint = new NotBlank();
 
         $builder->add('email', EmailType::class, [
-            'constraints' => [$constraint, new Length(['min' => 2])]
+            'constraints' => [
+                $constraint,
+                new Regex("^[0-9]{1,3}(?:(?:[,. ]){1}[-a-zA-Zàâäéèêëïîôöùûüç]+)*$^")]
         ])
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
+                'constraints' => array(
+                    $constraint,
+                    new Regex("^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$^")
+                ),
                 'first_options' => ['label' => 'Password'],
                 'second_options' => ['label' => 'Confirm password']
             ])

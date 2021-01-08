@@ -1,5 +1,10 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-{{ form(formInfo) }}
+
+    {{ form_start(formInfo) }}
+    {{ form_row(formInfo.email) }}
+    {{ form_row(formInfo.password) }}
+    {{ form_end(formInfo) }}
+
 {% endblock %}
