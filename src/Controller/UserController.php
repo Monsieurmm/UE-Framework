@@ -4,15 +4,17 @@
 namespace App\Controller;
 
 
+use App\Entity\User;
 use App\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 class UserController extends AbstractController
 {
     /**
-     * @Route("/login", name="login")
+     * @Route("/login", name="login", methods={"POST"})
      * @param Request $request
      * @return Response
      */
@@ -27,12 +29,19 @@ class UserController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            if (/* data valid */) {
+            if ($user->getEmail() === "toto@toto.com" && $user->getPassword() === "password1") {
                 return $this->render('auth.html.twig', [
-                    'data' =>
-                ])
+                    'user' => $user
+                ]);
+            } else {
+                return $this->render('login.html.twig', [
+                    'form' => $form->createView()
+                ]);
             }
-
         }
+
+        return $this->render('login.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 }
