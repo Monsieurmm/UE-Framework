@@ -20,25 +20,33 @@ use Symfony\Component\Validator\Constraints\Regex;
 class AccountController extends AbstractController
 {
     /**
-     * @Route("/account", name="create_account")
+     * @Route("/login", name="create_account")
      * @param Request $request
+     * @return Response
      */
-    public function createAccount(Request $request)
+    public function createAccount(Request $request): Response
     {
-        $builder = $this->createFormBuilder(null, array('csrf_protection' => false));
+        $builder = $this->createFormBuilder();
 
         $constraint = new NotBlank();
 
-        $builder->add('email', EmailType::class, [
+        $builder->add('email', TextType::class, [
             'constraints' => [
                 $constraint,
-                new Regex("^[0-9]{1,3}(?:(?:[,. ]){1}[-a-zA-Zàâäéèêëïîôöùûüç]+)*$^")]
+                new Length(['min' => 2]),
+                new Regex([
+                    'pattern' => "^([\w\.\-]+)@([\w\-]+)((\.(\w){2,})+)$^",
+                    'message' => "invalid email"
+                    ])]
         ])
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'constraints' => array(
-                    $constraint,
-                    new Regex("^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$^")
+                    new NotBlank(),
+                    new Regex([
+                        'pattern' => "^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$^",
+                        'message' => "invalid password"
+                    ])
                 ),
                 'first_options' => ['label' => 'Password'],
                 'second_options' => ['label' => 'Confirm password']
@@ -56,6 +64,7 @@ class AccountController extends AbstractController
             return $this->render('auth.html.twig', [
                 'data' => $form->getData()
             ]);
+
         } else {
             return $this->render('account.html.twig', [
                 'formInfo' => $renderForm

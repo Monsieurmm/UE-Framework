@@ -5,6 +5,8 @@ namespace App\Controller;
 
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,25 +14,40 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Contracts\Translation\TranslatableInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class AuthController extends AbstractController
 {
     /**
-     * @Route("/login", name="auth_login")
+     * @Route("/account", name="auth_login")
      * @param Request $request
      * @return Response
      */
     public function login(Request $request): Response
     {
-        $builder = $this->createFormBuilder();
+        $builder = $this->createFormBuilder(null, array('csrf_protection' => false));
 
         $constraint = new NotBlank();
 
-        $builder->add('name', TextType::class,[
-            'constraints' => [$constraint, new Length(['min' => 2, 'minMessage' => 'Too short only {{ value }} chars instead of {{ limit }}'])]
+        $builder->add('email', TextType::class,[
+            'constraints' => [
+                $constraint,
+                new Regex([
+                    'pattern' => "^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$^",
+                    'message' => 'invalid email'
+                ])]
         ])
+            ->add('password', RepeatedType::class,[
+                'type' => PasswordType::class,
+                'constraints' => [
+                    $constraint,
+                    new Regex([
+                        'pattern' => "^([\w\.\-]+)@([\w\-]+)((\.(\w){2,})+)$^",
+                        'message' => 'invalid password'
+                    ])]
+            ])
             ->add('btSubmit', SubmitType::class);
 
         $form = $builder->getForm();
