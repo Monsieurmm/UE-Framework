@@ -20,7 +20,7 @@ use Symfony\Component\Validator\Constraints\Regex;
 class AccountController extends AbstractController
 {
     /**
-     * @Route("/login", name="create_account")
+     * @Route("/lol", name="create_account")
      * @param Request $request
      * @return Response
      */
