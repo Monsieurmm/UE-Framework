@@ -1,7 +1,17 @@
- {{ form_start(form) }}
+{% extends 'base.html.twig' %}
 
-    <div class="form-inline form-group mb-2">
-        {{ form_widget(form.email, {'attr': {'placeholder': 'Email' }}) }}
-        {{ form_widget(form.password, {'attr': {'placeholder': 'Password' }}) }}
-        {{ form_end(form) }}
+{% block body %}
+
+    <div class="container col-md-4 col-md-offset-4" >
+        {{ form_start(form) }}
+
+        <div class="form-group mb-2">
+            {{ form_widget(form.email, {'attr': {'placeholder': 'Email' }}) }}
+            {{ form_errors(form.email) }}
+            {{ form_widget(form.password, {'attr': {'placeholder': 'Password' }}) }}
+            {{ form_errors(form.password) }}
+            {{ form_end(form) }}
+        </div>
     </div>
+
+{% endblock %}

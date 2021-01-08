@@ -22,7 +22,10 @@ class UserController extends AbstractController
     {
         $user = new User();
 
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(UserType::class, $user, [
+            'action' => $this->generateUrl('login'),
+            'method' => 'POST'
+        ]);
 
         $form->handleRequest($request);
 
@@ -39,7 +42,7 @@ class UserController extends AbstractController
             }
         }
 
-        return $this->render('login.html.twig', [
+        return $this->render('_nav_login.html.twig', [
             'form' => $form->createView()
         ]);
     }

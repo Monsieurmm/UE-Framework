@@ -1,0 +1,9 @@
+{{ form_start(form) }}
+
+<div class="form-inline form-group mb-2">
+    {{ form_widget(form.email, {'attr': {'placeholder': 'Email' }}) }}
+    {{ form_errors(form.email) }}
+    {{ form_widget(form.password, {'attr': {'placeholder': 'Password' }}) }}
+    {{ form_errors(form.password) }}
+    {{ form_end(form) }}
+</div>
