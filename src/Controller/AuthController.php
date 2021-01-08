@@ -27,7 +27,7 @@ class AuthController extends AbstractController
      */
     public function login(Request $request): Response
     {
-        $builder = $this->createFormBuilder();
+        $builder = $this->createFormBuilder(null, array('csrf_protection' => false));
 
         $builder->add('email', TextType::class,[
             'constraints' => [
