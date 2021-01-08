@@ -26,7 +26,6 @@ class UserController extends AbstractController
 
         $form->handleRequest($request);
 
-
         if ($form->isSubmitted() && $form->isValid()) {
 
             if ($user->getEmail() === "toto@toto.com" && $user->getPassword() === "password1") {

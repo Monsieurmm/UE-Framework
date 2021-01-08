@@ -1,13 +1,7 @@
-{% extends 'base.html.twig' %}
-
-{% block body %}
-
-    {{ form_start(form) }}
+ {{ form_start(form) }}
 
     <div class="form-inline form-group mb-2">
         {{ form_widget(form.email, {'attr': {'placeholder': 'Email' }}) }}
         {{ form_widget(form.password, {'attr': {'placeholder': 'Password' }}) }}
         {{ form_end(form) }}
     </div>
-
-{% endblock %}
