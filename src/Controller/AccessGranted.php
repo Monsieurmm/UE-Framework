@@ -6,14 +6,30 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class AccessGranted extends AbstractController
 {
+    /**
+     * @var EntityManagerInterface
+     */
+    private $em;
+
+    /**
+     * SecurityService constructor.
+     * @param EntityManagerInterface $em
+     */
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
+
     /**
      * @Route("/home", name="home")
      * @param ValidatorInterface $validator
@@ -33,25 +49,27 @@ class AccessGranted extends AbstractController
 
             if ($form->isSubmitted() && $form->isValid()) {
 
-                if ($user->getEmail() === "toto@toto.com" && $user->getPassword() === "password1") {
-                    return $this->render('auth.html.twig', [
-                        'user' => $user
-                    ]);
-                } else {
+                $user = new User();
+
+                $form = $this->createForm(UserType::class, $user, [
+                    'action' => $this->generateUrl('home'),
+                    'method' => 'POST'
+                ]);
+
+                $form->handleRequest($request);
+
+                $this->em->persist($user);
+                $this->em->flush();
+
+                return $this->redirectToRoute('hello');
+            } else {
                     $errors = $validator->validate($form);
 
                     foreach ($errors as $error) {
                         $message .= $error->getMessage() . " ";
                     }
                 }
-            } else {
-                $errors = $validator->validate($form);
-
-                foreach ($errors as $error) {
-                    $message .= $error->getMessage() . " ";
-                }
             }
-        }
 
         return $this->render("accueil/home.html.twig", [
             'message' => $message

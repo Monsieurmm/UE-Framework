@@ -36,7 +36,7 @@ class UserType extends AbstractType
                     ])
                 ]
             ])
-            ->add('connexion', SubmitType::class, [
+            ->add('register', SubmitType::class, [
                 'attr' => [
                     'class' => 'btn btn-primary'
                 ]

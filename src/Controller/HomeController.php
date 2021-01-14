@@ -11,11 +11,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeController extends AbstractController
 {
     /**
-     * @Route("/hello", options={"Ouverture":"8-17"}, name="hello")
+     * @Route("/hello", name="hello")
      * @return Response
      */
     public function home()
     {
-        return new Response("hello world");
+        return new Response("Registered");
     }
 }
