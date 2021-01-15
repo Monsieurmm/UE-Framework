@@ -77,7 +77,7 @@ class UserController extends AbstractController
     {
         $users = $this->userService->getAllUsers();
 
-        return $this->render('user.html.twig', [
+        return $this->render('users.html.twig', [
             'users' => $users
         ]);
     }
