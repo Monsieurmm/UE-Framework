@@ -61,7 +61,7 @@ class AccessGranted extends AbstractController
                 $this->em->persist($user);
                 $this->em->flush();
 
-                return $this->redirectToRoute('hello');
+                return $this->redirectToRoute('getUsers');
             } else {
                     $errors = $validator->validate($form);
 
