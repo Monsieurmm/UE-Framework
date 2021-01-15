@@ -2,14 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
+use App\Repository\LoginRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=UserRepository::class)
- * @ORM\Table(name="`user`")
+ * @ORM\Entity(repositoryClass=LoginRepository::class)
  */
-class User
+class Login
 {
     /**
      * @ORM\Id
@@ -21,7 +20,7 @@ class User
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $email;
+    private $login;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -33,14 +32,14 @@ class User
         return $this->id;
     }
 
-    public function getEmail(): ?string
+    public function getLogin(): ?string
     {
-        return $this->email;
+        return $this->login;
     }
 
-    public function setEmail(string $email): self
+    public function setLogin(string $login): self
     {
-        $this->email = $email;
+        $this->login = $login;
 
         return $this;
     }
