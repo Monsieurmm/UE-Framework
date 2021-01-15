@@ -61,7 +61,7 @@ class UserController extends AbstractController
             $this->em->persist($user);
             $this->em->flush();
 
-            return $this->redirectToRoute('hello');
+            return $this->redirectToRoute('getUsers');
         }
 
         return $this->render('_nav_login.html.twig', [
@@ -71,12 +71,14 @@ class UserController extends AbstractController
 
     /**
      * @Route("/users", name="getUsers")
-     * @return JsonResponse
+     * @return Response
      */
-    public function getUsers(): JsonResponse
+    public function getUsers(): Response
     {
         $users = $this->userService->getAllUsers();
 
-        return $this->json($users, 200, ["Content-Type" => "application/json"]);
+        return $this->render('user.html.twig', [
+            'users' => $users
+        ]);
     }
 }
